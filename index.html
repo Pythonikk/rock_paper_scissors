@@ -10,21 +10,35 @@
 		Rock || Paper || Scissors
 	</h1>
 	<div class="buttons">
+		<h3>
+		Make Your Selection:
+		</h3>
 		<button id="btn-rock">Rock</button>
 		<button id="btn-paper">Paper</button>
 		<button id="btn-scissors">Scissors</button>
 	</div>
+	<div class="results">
+	</div>
+	<div class="score">
+		<h3>
+			You Vs. Computer
+		</h3>
+	</div>
 
 	<script>
-
-		function computerPlay() {
-			const choices = ['rock', 'paper', 'scissors'];
-			let choice = choices[Math.floor(Math.random() * choices.length)];
-			return choice
-		}
-
 		let id;
 		let playerSelection;
+
+		let playerScore = 0;
+		let compScore = 0;
+
+		const rock = document.querySelector('#btn-rock');
+		const paper = document.querySelector('#btn-paper');
+		const scissors = document.querySelector('#btn-scissors');
+
+		rock.addEventListener('click', whichButton);
+		paper.addEventListener('click', whichButton);
+		scissors.addEventListener('click', whichButton);
 
 		function whichButton(event) {
 			id = event.target.id;
@@ -38,13 +52,18 @@
 			return id;
 		}
 
-		const rock = document.querySelector('#btn-rock');
-		const paper = document.querySelector('#btn-paper');
-		const scissors = document.querySelector('#btn-scissors');
+		rock.addEventListener('click', playRound);
+		paper.addEventListener('click', playRound);
+		scissors.addEventListener('click', playRound);
 
-		rock.addEventListener('click', whichButton);
-		paper.addEventListener('click', whichButton);
-		scissors.addEventListener('click', whichButton);
+		const results = document.querySelector('.results');
+		const paraResult = document.createElement('p');
+
+		const score = document.querySelector('.score');
+		const paraScore = document.createElement('p');
+
+		results.appendChild(paraResult);
+		score.appendChild(paraScore);
 
 		function playRound() {
 			let compSelection = computerPlay();
@@ -54,23 +73,41 @@
 				return word;
 			}
 
-			if (playerSelection == 'rock' && compSelection == 'scissors' || playerSelection == 'paper' && compSelection == 'rock' || playerSelection == 'scissors' && compSelection == 'paper') {
-				console.log('You win! ' + capitalize(playerSelection) + ' beats ' + capitalize(compSelection) + '.');
-				return 'win'
-			} else if (playerSelection == compSelection) {
-				console.log('It\'s a tie! Throw down again.');
-				return 'tie'
-			} else {
-				console.log('You lose. ' + capitalize(compSelection) + ' beats ' + capitalize(playerSelection) + '.');
-				return 'loss'
+			function computerPlay() {
+				const choices = ['rock', 'paper', 'scissors'];
+				let choice = choices[Math.floor(Math.random() * choices.length)];
+				return choice
 			}
+
+			if (playerSelection == 'rock' && compSelection == 'scissors' || playerSelection == 'paper' && compSelection == 'rock' || playerSelection == 'scissors' && compSelection == 'paper') {
+				paraResult.textContent = ('You win! ' + capitalize(playerSelection) + ' beats ' + capitalize(compSelection) + '.');
+				playerScore += 1;
+				paraScore.textContent = (playerScore + ' : ' + compScore);
+
+			} else if (playerSelection == compSelection) {
+				paraResult.textContent = ('It\'s a tie! Throw down again.');
+				paraScore.textContent = (playerScore + ' : ' + compScore);
+
+			} else {
+				paraResult.textContent = ('You lose. ' + capitalize(compSelection) + ' beats ' + capitalize(playerSelection) + '.');
+				compScore += 1;
+				paraScore.textContent = (playerScore + ' : ' + compScore);
+			}
+
+			if (playerScore == 5 || compScore == 5) {
+				// remove all elements from the page
+				document.documentElement.innerHTML = '';
+				const body = document.querySelector('body');
+				const header = document.createElement('h1');
+				body.appendChild(header);
+
+				if (playerScore == 5) {
+					header.textContent = 'You Win! :)';
+				} else {
+					header.textContent = 'You Lose. :(';
+				}
+			}	
 		}
-
-		rock.addEventListener('click', playRound);
-		paper.addEventListener('click', playRound);
-		scissors.addEventListener('click', playRound);
-
-		
 	
 	</script>
 </body>
