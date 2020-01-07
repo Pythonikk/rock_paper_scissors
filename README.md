@@ -1,2 +1,2 @@
 # rock_paper_scissors
-Console version of the classic game
+Basic web application of 'Rock, paper, scissors'.
