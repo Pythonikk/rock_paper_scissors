@@ -4,25 +4,47 @@
 	<meta charset="utf-8">
 	<title>Rock | Paper | Scissors</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
+	<link href="https://fonts.googleapis.com/css?family=Cairo:300,400&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
-	<h1>
+	<h1 class='title'>
 		Rock || Paper || Scissors
 	</h1>
+	<h4 class="goal">
+		First to 5 points is declared winner!
+	</h4>
+	<h3 class="selection-label">
+		- Choose Wisely -
+	</h3>
 	<div class="buttons">
-		<h3>
-		Make Your Selection:
-		</h3>
 		<button id="btn-rock">Rock</button>
 		<button id="btn-paper">Paper</button>
 		<button id="btn-scissors">Scissors</button>
 	</div>
-	<div class="results">
+	<div class="container">
+		<div class="scoreboard">
+			<div class="score-labels">
+				<h3 class="results">
+					Round Result:
+				</h3>
+				<h3 class="score">
+					Current Score:
+				</h3>
+			</div>
+			<div class="score-current">
+				<div class="new-result">
+				</div>
+				<div class="new-score">
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="score">
-		<h3>
-			You Vs. Computer
-		</h3>
+
+
+	<div class="logo">
+		<img src="images/logo.png">
 	</div>
 
 	<script>
@@ -56,10 +78,10 @@
 		paper.addEventListener('click', playRound);
 		scissors.addEventListener('click', playRound);
 
-		const results = document.querySelector('.results');
+		const results = document.querySelector('.new-result');
 		const paraResult = document.createElement('p');
 
-		const score = document.querySelector('.score');
+		const score = document.querySelector('.new-score');
 		const paraScore = document.createElement('p');
 
 		results.appendChild(paraResult);
@@ -99,12 +121,13 @@
 				document.documentElement.innerHTML = '';
 				const body = document.querySelector('body');
 				const header = document.createElement('h1');
-				body.appendChild(header);
+				header.style.cssText = 'font-family: sans-serif; font-size: 100px; color: #3d4c53; text-align: center; sans-serif';
+				body.append(header);
 
 				if (playerScore == 5) {
-					header.textContent = 'You Win! :)';
+					header.textContent = 'You Win :)';
 				} else {
-					header.textContent = 'You Lose. :(';
+					header.textContent = 'You Lose :(';
 				}
 			}	
 		}
